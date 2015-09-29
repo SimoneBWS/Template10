@@ -196,18 +196,10 @@ namespace Template10.Common
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
                 var handled = false;
-                if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+                if (NavigationService.CanGoBack)
                 {
-                    if (NavigationService.CanGoBack)
-                    {
-                        handled = true;
-                    }
+                    handled = true;
                 }
-                else
-                {
-                    handled = !NavigationService.CanGoBack;
-                }
-
                 args.Handled = handled;
                 RaiseBackRequested(ref handled);
             };
