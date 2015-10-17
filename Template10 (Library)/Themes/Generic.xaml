@@ -842,7 +842,7 @@
                                                 Foreground="{TemplateBinding Foreground}"
                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                IsTabStop="False" VerticalAlignment="Top" />                                                
+                                                IsTabStop="False" VerticalAlignment="Top" Margin="4,0,0,0"/>
                                 <ItemsControl x:Name="PrimaryItemsControl" Grid.Column="1" HorizontalAlignment="Right" IsTabStop="False" MinHeight="{ThemeResource AppBarThemeMinHeight}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
