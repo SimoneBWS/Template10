@@ -1,10 +1,9 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.Targets.UniversalWindowsPlatform": "5.0.0",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.0.*",
-    "Newtonsoft.Json": "7.0.1",
-    "NotificationsExtensions.Win10": "10240.0.6"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+    "NotificationsExtensions.Win10": "10586.0.2"
   },
   "frameworks": {
     "uap10.0": {}

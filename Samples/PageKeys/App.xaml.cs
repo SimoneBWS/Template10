@@ -1,28 +1,36 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Template10.Utils;
 using Windows.ApplicationModel.Activation;
 
-namespace Sample
+namespace Template10.Samples.PageKeysSample
 {
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : Common.BootStrapper
     {
         public App()
         {
             InitializeComponent();
         }
 
-        public enum Pages { MainPage }
-
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        public enum Pages
         {
-            var keys = PageKeys<Pages>();
-            keys.Add(Pages.MainPage, typeof(Views.MainPage));
-            return base.OnInitializeAsync(args);
+            MainPage,
+            DetailPage,
+            AboutPage
         }
 
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            NavigationService.Navigate(Pages.MainPage);
-            return Task.FromResult<object>(null);
+            var keys = PageKeys<Pages>();
+            keys.TryAdd(Pages.MainPage, typeof(Views.MainPage));
+            keys.TryAdd(Pages.DetailPage, null);
+            keys.TryAdd(Pages.AboutPage, null);
+            await Task.CompletedTask;
+        }
+
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        {
+            await NavigationService.NavigateAsync(Pages.MainPage, 2);
         }
     }
 }

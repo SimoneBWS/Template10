@@ -1,57 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
+using Template10.Mvvm;
+using System.Collections.ObjectModel;
 
-namespace Sample.ViewModels
+namespace Template10.Samples.BottomAppBarSample.ViewModels
 {
-    public class MainPageViewModel : Sample.Mvvm.ViewModelBase
+    public class MainPageViewModel : ViewModelBase
     {
         public MainPageViewModel()
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            string up = "";
+            string down = "";
+            var random = new Random((int)DateTime.Now.Ticks);
+            foreach (var item in Enumerable.Range(1, 20))
             {
-                // designtime data
-                Value = "Designtime value";
-                return;
+                var val = random.Next(-10, 10);
+                var data = new Models.DataItem
+                {
+                    Value1 = $"Product name {1}",
+                    Value2 = random.Next(10, 55).ToString("C2"),
+                    Value3 = (val * .01).ToString("C2"),
+                    Arrow = val > 0 ? up : down,
+                    Value4 = (random.Next(-10, 10) * .01).ToString("P"),
+                    Value5 = DateTime.Now.AddDays(random.Next(10, 1000)).ToString("dd MMM yyyy"),
+                    Value6 = "Template 10",
+                };
+                Items.Add(data);
             }
         }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
-        {
-            if (state.Any())
-            {
-                // use cache value(s)
-                if (state.ContainsKey(nameof(Value))) Value = state[nameof(Value)]?.ToString();
-                // clear any cache
-                state.Clear();
-            }
-        }
-
-        public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
-        {
-            if (suspending)
-            {
-                // persist into cache
-                state[nameof(Value)] = Value;
-            }
-            return base.OnNavigatedFromAsync(state, suspending);
-        }
-
-        public override void OnNavigatingFrom(NavigatingEventArgs args)
-        {
-            base.OnNavigatingFrom(args);
-        }
-
-        private string _Value = string.Empty;
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
-
-        public void GotoDetailsPage()
-        {
-            this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
-        }
+        public ObservableCollection<Models.DataItem> Items { get; } = new ObservableCollection<Models.DataItem>();
     }
 }
-

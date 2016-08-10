@@ -1,6 +1,6 @@
 ﻿using Template10.Services.SettingsService;
 
-namespace Sample.Services
+namespace Template10.Samples.SettingsSample.Services
 {
     public class SettingsService
     {

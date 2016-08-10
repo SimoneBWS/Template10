@@ -1,7 +1,7 @@
-﻿using Sample.ViewModels;
+﻿using Template10.Samples.CortanaSample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Template10.Samples.CortanaSample.Views
 {
     public sealed partial class MainPage : Page
     {
@@ -11,5 +11,10 @@ namespace Sample.Views
         }
 
         public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
+
+        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -20,14 +20,14 @@ namespace Template10.Utils
             var di = windowWrapper.DisplayInformation();
             di.OrientationChanged += new Common.WeakReference<MonitorUtils, DisplayInformation, object>(this)
             {
-                EventAction = (i, s, e) => Changed?.Invoke(i, EventArgs.Empty),
+                EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => di.OrientationChanged -= w.Handler
             }.Handler;
 
             var av = windowWrapper.ApplicationView();
             av.VisibleBoundsChanged += new Common.WeakReference<MonitorUtils, ApplicationView, object>(this)
             {
-                EventAction = (i, s, e) => Changed?.Invoke(i, EventArgs.Empty),
+                EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => av.VisibleBoundsChanged -= w.Handler
             }.Handler;
 
@@ -37,7 +37,8 @@ namespace Template10.Utils
 
         #region singleton
 
-        static Dictionary<Common.WindowWrapper, MonitorUtils> Cache = new Dictionary<Common.WindowWrapper, MonitorUtils>();
+        private static Dictionary<Common.WindowWrapper, MonitorUtils> Cache = new Dictionary<Common.WindowWrapper, MonitorUtils>();
+
         public static MonitorUtils Current(Common.WindowWrapper windowWrapper = null)
         {
             windowWrapper = windowWrapper ?? Common.WindowWrapper.Current();
@@ -54,22 +55,31 @@ namespace Template10.Utils
             return Cache[windowWrapper];
         }
 
-        #endregion
+        public void Maximize()
+        {
+            var size = new Windows.Foundation.Size(Current().Pixels.Width, Current().Pixels.Height);
+            size.Height -= 100;
+            size.Width -= 100;
+            var av = ApplicationView.GetForCurrentView();
+            av.TryResizeView(size);
+        }
+
+        #endregion singleton
 
         public class InchesInfo
         {
-            Common.WindowWrapper WindowWrapper;
+            private Common.WindowWrapper WindowWrapper;
+
             public InchesInfo(Common.WindowWrapper windowWrapper)
             {
-                windowWrapper = WindowWrapper;
+                WindowWrapper = windowWrapper;
             }
 
             public double Height
             {
                 get
                 {
-                    var rect = PointerDevice.GetPointerDevices().Last().PhysicalDeviceRect;
-                    return rect.Height / 96;
+                    return Current().Pixels.Height / 96;
                 }
             }
 
@@ -77,8 +87,7 @@ namespace Template10.Utils
             {
                 get
                 {
-                    var rect = PointerDevice.GetPointerDevices().Last().PhysicalDeviceRect;
-                    return rect.Width / 96;
+                    return Current().Pixels.Width / 96;
                 }
             }
 
@@ -93,29 +102,34 @@ namespace Template10.Utils
 
         public class PixelsInfo
         {
-            Common.WindowWrapper WindowWrapper;
+            private Common.WindowWrapper WindowWrapper;
+
             public PixelsInfo(Common.WindowWrapper windowWrapper)
             {
-                windowWrapper = WindowWrapper;
+                WindowWrapper = windowWrapper;
             }
 
-            public int Height
+            public double Height
             {
                 get
                 {
-                    var rect = PointerDevice.GetPointerDevices().Last().ScreenRect;
-                    var scale = WindowWrapper.DisplayInformation().RawPixelsPerViewPixel;
-                    return (int)(rect.Height * scale);
+                    var av = ApplicationView.GetForCurrentView();
+                    var bounds = av.VisibleBounds;
+                    var di = DisplayInformation.GetForCurrentView();
+                    var factor = di.RawPixelsPerViewPixel;
+                    return bounds.Height * factor;
                 }
             }
 
-            public int Width
+            public double Width
             {
                 get
                 {
-                    var rect = PointerDevice.GetPointerDevices().Last().ScreenRect;
-                    var scale = WindowWrapper.DisplayInformation().RawPixelsPerViewPixel;
-                    return (int)(rect.Width * scale);
+                    var av = ApplicationView.GetForCurrentView();
+                    var bounds = av.VisibleBounds;
+                    var di = DisplayInformation.GetForCurrentView();
+                    var factor = di.RawPixelsPerViewPixel;
+                    return bounds.Width * factor;
                 }
             }
 

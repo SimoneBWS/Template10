@@ -6,7 +6,7 @@ namespace Template10.Mvvm
     using System.Diagnostics;
 
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
-    public class DelegateCommand : System.Windows.Input.ICommand
+    public class DelegateCommand : IChangedCommand
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
@@ -42,7 +42,7 @@ namespace Template10.Mvvm
     }
 
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
-    public class DelegateCommand<T> : System.Windows.Input.ICommand
+    public class DelegateCommand<T> : IChangedCommand
     {
         private readonly Action<T> _execute;
         private readonly Func<T, bool> _canExecute;
@@ -59,20 +59,21 @@ namespace Template10.Mvvm
         [DebuggerStepThrough]
         public bool CanExecute(object p)
         {
-            try
-            {
-                var _Value = (T)Convert.ChangeType(p, typeof(T));
-                return _canExecute == null ? true : _canExecute(_Value);
-            }
+            try { return _canExecute(ConvertParameterValue(p)); }
             catch { return false; }
         }
 
         public void Execute(object p)
         {
-            if (!CanExecute(p))
+            if (!this.CanExecute(p))
                 return;
-            var _Value = (T)Convert.ChangeType(p, typeof(T));
-            _execute(_Value);
+            _execute(ConvertParameterValue(p));
+        }
+
+        private static T ConvertParameterValue(object parameter)
+        {
+            parameter = parameter is T ? parameter : Convert.ChangeType(parameter, typeof(T));
+            return (T)parameter;
         }
 
         public void RaiseCanExecuteChanged()

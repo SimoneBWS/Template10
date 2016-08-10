@@ -1,7 +1,6 @@
-﻿using Sample.ViewModels;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Template10.Samples.MasterDetailSample.Views
 {
     public sealed partial class MainPage : Page
     {
@@ -9,7 +8,5 @@ namespace Sample.Views
         {
             InitializeComponent();
         }
-
-        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
     }
 }

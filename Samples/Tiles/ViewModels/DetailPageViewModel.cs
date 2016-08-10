@@ -1,15 +1,12 @@
-﻿using Sample.Services.TileService;
-using System;
+﻿using Template10.Samples.TilesSample.Services.TileService;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Template10.Samples.TilesSample.ViewModels
 {
     public class DetailPageViewModel : Template10.Mvvm.ViewModelBase
     {
@@ -23,7 +20,7 @@ namespace Sample.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (state.Any())
             {
@@ -39,6 +36,7 @@ namespace Sample.ViewModels
             }
 
             UpdatePins();
+            return Task.CompletedTask;
         }
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
@@ -51,9 +49,10 @@ namespace Sample.ViewModels
             return base.OnNavigatedFromAsync(state, suspending);
         }
 
-        public override void OnNavigatingFrom(NavigatingEventArgs args)
+        public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
             args.Cancel = false;
+            return Task.CompletedTask;
         }
 
         private string _Value = "Default";

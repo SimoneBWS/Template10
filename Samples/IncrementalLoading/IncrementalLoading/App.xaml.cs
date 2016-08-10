@@ -1,9 +1,9 @@
-﻿using Sample.Views;
+﻿using Template10.Samples.IncrementalLoadingSample.Views;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
 
-namespace Sample
+namespace Template10.Samples.IncrementalLoadingSample
 {
     sealed partial class App : BootStrapper
     {
@@ -15,7 +15,7 @@ namespace Sample
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(typeof(MainView));
-            return Task.FromResult<object>(null);
-        }
+			return Task.CompletedTask;
+		}
     }
 }

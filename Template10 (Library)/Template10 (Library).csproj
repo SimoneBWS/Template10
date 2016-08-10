@@ -11,7 +11,7 @@
     <AssemblyName>Template10Library</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -100,6 +100,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>
     </DocumentationFile>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -127,13 +128,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
+    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
+    <Compile Include="Common\Deferral.cs" />
+    <Compile Include="Common\EventThrottleHelper.cs" />
+    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />
+    <Compile Include="Behaviors\MessageDialogAction.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\EllipsisBehavior.cs" />
+    <Compile Include="Behaviors\NavToPageAction.cs" />
     <Compile Include="Behaviors\OpenFlyoutAction.cs" />
+    <Compile Include="Behaviors\KeyBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\ConditionalAction.cs" />
+    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
@@ -142,37 +152,73 @@
     <Compile Include="Common\IStateItems.cs" />
     <Compile Include="Common\ItemPropertyChangedEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
+    <Compile Include="Common\NavButtonsHelper.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Common\ChangedEventArgs.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Common\ObservableItemCollection.cs" />
+    <Compile Include="Controls\HamburgerButtonTemplateSelected.cs" />
+    <Compile Include="Controls\HamburgerMenu.PublicMethods.xaml.cs">
+      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HamburgerMenu.PublicProperties.xaml.cs">
+      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ModalDialog.cs" />
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Controls\HamburgerButtonInfo.cs" />
     <Compile Include="Controls\PageHeader.cs" />
     <Compile Include="Controls\PiePiece.cs" />
     <Compile Include="Controls\Resizer.cs" />
+    <Compile Include="Controls\RingSegment.cs" />
+    <Compile Include="Common\TemplatePartNotFoundException.cs" />
     <Compile Include="Converters\ChangeTypeConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
+    <Compile Include="Mvvm\ChangedCommandAdapter.cs" />
+    <Compile Include="Mvvm\DependencyBindableBase.cs" />
+    <Compile Include="Mvvm\IChangedCommand.cs" />
+    <Compile Include="Services\FileService\FileHelper.cs" />
+    <Compile Include="Services\FileService\IFileService.cs" />
+    <Compile Include="Services\LoggingService\LoggingService.cs" />
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
-    <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services\NetworkAvailableService\ConnectionTypes.cs" />
+    <Compile Include="Services\NetworkAvailableService\INetworkAvailableService.cs" />
+    <Compile Include="Services\NetworkAvailableService\NetworkAvailableHelper.cs" />
+    <Compile Include="Services\NetworkAvailableService\NetworkAvailableService.cs" />
+    <Compile Include="Services\PopupService\PopupService.cs" />
+    <Compile Include="Services\ProfileService\ProfileService.cs" />
+    <Compile Include="Services\SerializationService\ISerializationService.cs" />
+    <Compile Include="Services\SerializationService\JsonSerializationService.cs" />
+    <Compile Include="Services\SerializationService\SerializationService.cs" />
+    <Compile Include="Services\SettingsService\IPropertyMapping.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
+    <Compile Include="Services\SettingsService\ISettingsService.cs" />
+    <Compile Include="Services\SettingsService\IStoreConverter.cs" />
+    <Compile Include="Services\SettingsService\JsonConverter.cs" />
+    <Compile Include="Services\SettingsService\JsonMapping.cs" />
     <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
+    <Compile Include="Services\ViewService\IViewService.cs" />
+    <Compile Include="Services\ViewService\SecondaryViewSynchronizationContextDecorator.cs" />
+    <Compile Include="Services\ViewService\ViewLifetimeControl.cs" />
+    <Compile Include="Services\ViewService\ViewService.cs" />
+    <Compile Include="Utils\ApiUtils.cs" />
     <Compile Include="Utils\AudioUtils.cs" />
     <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\DeviceUtils.cs" />
-    <Compile Include="Utils\InkUtils.cs" />
+    <Compile Include="Utils\ExpressionUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
-    <Compile Include="Utils\TaskUtils.cs" />
-    <Compile Include="Utils\XamlUtil.cs" />
+    <Compile Include="Utils\IEnumerableUtils.cs" />
+    <Compile Include="Utils\Template10Utils.cs" />
+    <Compile Include="Utils\XamlUtils.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
@@ -191,7 +237,7 @@
     <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="Services\SettingsService\SettingsHelper.cs" />
-    <Compile Include="Utils\TypeUtil.cs" />
+    <Compile Include="Utils\TypeUtils.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -199,17 +245,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\Mdl2.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Converters\Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\HamburgerMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ModalDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\PageHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Resizer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -225,7 +279,7 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\template10.snk</AssemblyOriginatorKeyFile>
@@ -236,7 +290,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>call "$(ProjectDir)\Nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"</PostBuildEvent>
+    <PostBuildEvent>call "$(ProjectDir)\Nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"
+call "$(SolutionDir)\Template10 (Installer)\InstallSnippets.cmd"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

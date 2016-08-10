@@ -1,24 +1,48 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Template10.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Controls
+namespace Template10.Samples.SearchSample.Controls
 {
     public sealed partial class SearchPart : UserControl
     {
         public SearchPart()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
-        public object NormalVisualState { get; }
+        public event EventHandler HideRequested;
+        public event TypedEventHandler<string> SelectionMade;
 
-        private void SearchSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CloseClicked(object sender, RoutedEventArgs e)
         {
-            if (!e.AddedItems.Any())
-                return;
-            BootStrapper.Current.NavigationService.Navigate(typeof(Views.DetailPage), e.AddedItems.FirstOrDefault());
+            // raise event
+            HideRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void SearchItemClicked(object sender, ItemClickEventArgs e)
+        {
+            // raise event
+            SelectionMade?.Invoke(this, e.ClickedItem as string);
+        }
+
+        public ObservableCollection<string> Results { get; } = new ObservableCollection<string>();
+
+        private void SearchClicked(object sender, RoutedEventArgs e)
+        {
+            Search();
+        }
+
+        public void Search()
+        {
+            Results.Clear();
+            foreach (var item in Enumerable.Range(1, 10))
+            {
+                Results.Add(string.Format("Template10.Samples.SearchSample Result {0}", item));
+            }
         }
     }
 }

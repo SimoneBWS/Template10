@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Template10.Mvvm;
-using Windows.Media.SpeechRecognition;
-using Windows.Media.SpeechSynthesis;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Template10.Samples.CortanaSample.ViewModels
 {
     public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
@@ -23,7 +18,7 @@ namespace Sample.ViewModels
             Instance = this;
         }
 
-        public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             Value = parameter?.ToString() ?? "No value";
             try
@@ -40,7 +35,7 @@ namespace Sample.ViewModels
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
             _SpeechService.Dispose();
-            return Task.FromResult<object>(null);
+            return Task.CompletedTask;
         }
 
         private string _Value;
@@ -61,23 +56,33 @@ namespace Sample.ViewModels
 
         private async void ListenExecute()
         {
-			try
-			{
-				Value = await _SpeechService.ListenAsync("Cortana Sample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
-			}
-			catch(Exception ex)
-			{
-				var messageDialog = new Windows.UI.Popups.MessageDialog
-						("Failed to start speech recognition." + 
-						Environment.NewLine + Environment.NewLine + "Message: " + ex.Message,
-						"Speech recognition failed");
-				await messageDialog.ShowAsync();
-			}
-		}
+            try
+            {
+                Value = await _SpeechService.ListenAsync("Template10.Samples.CortanaSample Template10.Samples.CortanaSample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
+            }
+            catch (Exception ex)
+            {
+                var messageDialog = new Windows.UI.Popups.MessageDialog
+                        ("Failed to start speech recognition." +
+                        Environment.NewLine + Environment.NewLine + "Message: " + ex.Message,
+                        "Speech recognition failed");
+                await messageDialog.ShowAsync();
+            }
+        }
 
-        public async Task Speak()
+        public async void Speak()
+        {
+            await SpeakAsync();
+        }
+
+        public async Task SpeakAsync()
         {
             await _SpeechService.SpeakAsync(Value);
+        }
+
+        public void GotoSettings()
+        {
+            NavigationService.Navigate(typeof(Views.SettingsPage));
         }
     }
 }

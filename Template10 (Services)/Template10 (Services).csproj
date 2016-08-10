@@ -152,6 +152,11 @@
     <Compile Include="MarketplaceService\IMarketplaceService.cs" />
     <Compile Include="MarketplaceService\MarketplaceHelper.cs" />
     <Compile Include="MarketplaceService\MarketplaceService.cs" />
+    <Compile Include="NagService\INagService.cs" />
+    <Compile Include="NagService\Nag.cs" />
+    <Compile Include="NagService\NagResponseInfo.cs" />
+    <Compile Include="NagService\NagService.cs" />
+    <Compile Include="NagService\NagServiceHelper.cs" />
     <Compile Include="NetworkAvailableService\INetworkAvailableService.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableHelper.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableService.cs" />
@@ -166,6 +171,7 @@
     <Compile Include="ShareContractService\ShareContractHelper.cs" />
     <Compile Include="ShareContractService\ShareContractService.cs" />
     <Compile Include="ToastService\IToastService.cs" />
+    <Compile Include="ToastService\ToastContent.cs" />
     <Compile Include="ToastService\ToastHelper.cs" />
     <Compile Include="ToastService\ToastService.cs" />
     <Compile Include="WebApiService\IWebApiService.cs" />

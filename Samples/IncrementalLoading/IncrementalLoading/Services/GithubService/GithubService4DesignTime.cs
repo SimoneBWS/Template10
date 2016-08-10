@@ -1,11 +1,9 @@
-﻿using Sample.Models;
-using Sample.Services;
-using Sample.Shared;
+﻿using Template10.Samples.IncrementalLoadingSample.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sample.Services.GithubService
+namespace Template10.Samples.IncrementalLoadingSample.Services.GithubService
 {
     public class GithubService4DesignTime : IGithubService
     {
